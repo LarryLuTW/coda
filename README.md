@@ -10,6 +10,25 @@ Restart Spotify when ads play. A lightweight macOS CLI daemon that detects Spoti
 
 ## Install
 
+### Homebrew (recommended)
+
+```bash
+brew install LarryLuTW/tap/coda
+```
+
+### Download binary
+
+Download the latest release from [GitHub Releases](https://github.com/LarryLuTW/coda/releases), extract, and place `coda` somewhere on your `PATH`:
+
+```bash
+tar xzf coda-*.tar.gz
+sudo mv coda /usr/local/bin/
+```
+
+> **Note**: macOS may show a Gatekeeper warning for downloaded binaries. Run `xattr -d com.apple.quarantine /usr/local/bin/coda` to clear it.
+
+### Build from source
+
 ```bash
 cargo install --path .
 ```

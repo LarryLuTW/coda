@@ -2,6 +2,9 @@
 name = "coda"
 version = "0.1.0"
 edition = "2024"
+description = "Restart Spotify when ads play — macOS daemon"
+license = "MIT"
+repository = "https://github.com/LarryLuTW/coda"
 
 [dependencies]
 anyhow = "1.0.102"
