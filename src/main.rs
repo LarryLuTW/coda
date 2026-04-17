@@ -1,6 +1,6 @@
 mod engine;
+mod log_tail;
 mod spotify;
-mod watcher;
 
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
@@ -102,7 +102,7 @@ fn init_logging(verbose: bool, to_file: bool) -> Result<()> {
 
 /// Core run logic shared by foreground and daemon modes.
 fn run_core() -> Result<()> {
-    let (rx, _watcher) = watcher::start_watching()?;
+    let (rx, _child) = log_tail::start_tailing()?;
     engine::run(rx)
 }
 
