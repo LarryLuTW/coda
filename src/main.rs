@@ -149,7 +149,13 @@ fn cmd_start(verbose: bool) -> Result<()> {
 fn cmd_stop() -> Result<()> {
     match read_pid() {
         Some(pid) if is_process_alive(pid) => {
-            signal::kill(Pid::from_raw(pid), Signal::SIGTERM)
+            // Signal the entire process group, not just the daemon. The
+            // daemon becomes its own process group leader via `setsid()` in
+            // `cmd_start`, so a negative PID here reaches both the daemon
+            // and its `log stream` child — without this, the child is
+            // orphaned on stop because Rust destructors don't run on
+            // external SIGTERM.
+            signal::kill(Pid::from_raw(-pid), Signal::SIGTERM)
                 .context("failed to send SIGTERM")?;
             println!("coda stopped (PID: {pid})");
             let _ = fs::remove_file(pid_file_path());
